@@ -1,0 +1,29 @@
+<% layout("layouts/boilerplate") %>
+
+
+<div class="container">
+<h2>Show Details</h2>
+<button onclick="window.history.back()" class="btn btn-dark mb-3 mt-3">Back</button>
+<div class="card">
+  <img class="card-img-top" src="<%= list.image.url %>" alt="Listing image">
+
+  <div class="card-body">
+    <h5 class="card-title"><b><%= list.title %></b></h5>
+
+    <p class="card-text">
+      Price: ₹ <%= list.price.toLocaleString("en-IN") %>/night
+    </p>
+
+    <p class="card-text"><%= list.description %></p>
+
+    <p class="card-text">
+      <small class="text-muted">
+        <%= list.location %>, <%= list.country %>
+      </small>
+    </p>
+  </div>
+</div>
+
+<a href="/listings/<%= list._id %>/edit" class=" mb-3 btn btn-dark mt-3">Edit</a>
+<a href="/listings/<%=list._id%>/delete" class=" mb-3 btn btn-dark mt-3">Delete</a>
+</div>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>new post</title>
+    
+    
+</head>
+<body>
+    <% layout("layouts/boilerplate") %>
+
+    
+
+    
+        
+    <h3 >Create a New Listing</h3>
+
+    <button class="btn btn-dark mb-3" onclick="window.history.back()">Back</button>
+
+    <form action="/listings" method="POST" class="border p-4 mb-5 rounded shadow-sm">
+    <div class="container p-4 mb-5 bg-light rounded">
+        <div >
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="Listing[title]" required>
+        </div>
+
+        <div>
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="Listing[description]" rows="3" required></textarea>
+        </div>
+
+        <div>
+            <label for="image" class="form-label">Image URL</label>
+            <input type="text" class="form-control" id="image" name="Listing[image]">
+        </div>
+<div class="row">
+    
+        <div class="col-6">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" name="Listing[price]" placeholder="Enter price">
+        </div>
+
+        
+
+        <div class="col-6">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control" id="country" name="Listing[country]" required>
+        </div>
+        
+       </div> 
+        <div>
+            <label for="location" class="form-label">Location</label>
+            <input type="text" class="form-control" id="location" name="Listing[location]" placeholder="Enter location" required>
+        </div>
+
+<br/><br/>
+        <button type="submit" class="btn btn-dark mt-3">Add</button>
+</div>
+    </form>
+ 
+    
+</body>
+</html>

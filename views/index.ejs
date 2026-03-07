@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wonderlust</title>
+</head>
+
+<body>
+    <%layout("layouts/boilerplate")%>
+    <h3 class="">All Listings</h3>
+    <ul>
+        
+        
+        <div class="row  row-cols-lg-3 row-cols-md-2 row-cols-sm-1 ">
+        <%for(let list of allListings){%>
+            <a href="/listings/<%=list._id%>" class="text-decoration-none text-dark">
+        <div class="card col" >
+  <img class="card-img-top" src="<%=list.image.url%>" alt="Card image cap">
+  <div class="card-img-overlay"><%=list.title%></div>
+  <div class="card-body">
+    <h5 class="card-title"><b><%=list.title%></b></h5>
+    
+    <p class="card-title">Price:&#8377; <%=list.price.toLocaleString("en-IN")%>/night</p>
+    
+  </div>
+</div>
+</a>
+<%}%>
+</div>
+    </ul>
+</body>
+</html>
