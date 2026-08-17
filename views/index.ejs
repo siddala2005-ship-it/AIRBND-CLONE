@@ -16,12 +16,12 @@
         <%for(let list of allListings){%>
             <a href="/listings/<%=list._id%>" class="text-decoration-none text-dark">
         <div class="card col" >
-  <img class="card-img-top" src="<%=list.image.url%>" alt="Card image cap">
+  <img class="card-img-top" src="<%= list.image?.url || '/images/airbnb.jpg' %>" alt="Card image cap">
   <div class="card-img-overlay"><%=list.title%></div>
   <div class="card-body">
     <h5 class="card-title"><b><%=list.title%></b></h5>
     
-    <p class="card-title">Price:&#8377; <%=list.price.toLocaleString("en-IN")%>/night</p>
+    <p class="card-title">Price:&#8377; <%= (list.price ?? 0).toLocaleString("en-IN") %>/night</p>
     
   </div>
 </div>

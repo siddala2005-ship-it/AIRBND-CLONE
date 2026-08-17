@@ -1,3 +1,4 @@
+// Sample travel listings used to seed the database with starter content
 const sampleListings = [
   {
     title: "Cozy Beachfront Cottage",

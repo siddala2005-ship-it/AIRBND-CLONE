@@ -1,69 +1,57 @@
 <% layout("layouts/boilerplate") %>
 
-<div class="container">
+<div class="container py-4">
   <h3>Edit Listing</h3>
-  <button onclick="window.history.back()" class="btn btn-dark mb-3">
-    Back
-  </button>
+  <button onclick="window.history.back()" class="btn btn-dark mb-3">Back</button>
 
-  <form action="/listings/<%= list._id %>?_method=PUT" method="POST">
+  <% if (error) { %>
+    <div class="alert alert-danger"><%= error %></div>
+  <% } %>
 
+  <form action="/listings/<%= list._id %>?_method=PUT" method="POST" class="needs-validation" novalidate>
     <div class="mb-3">
       <label class="form-label">Title:</label>
-      <input class="form-control"
-             type="text"
-             name="Listing[title]"
-             value="<%= list.title %>"
-             required>
+      <input class="form-control" type="text" name="Listing[title]" value="<%= list.title %>" required>
+      <div class="invalid-feedback">Please provide a title.</div>
     </div>
 
     <div class="mb-3">
       <label class="form-label">Description:</label>
-      <textarea class="form-control"
-                name="Listing[description]"
-                required><%= list.description %></textarea>
+      <textarea class="form-control" name="Listing[description]" required><%= list.description %></textarea>
+      <div class="invalid-feedback">Please provide a description.</div>   
     </div>
 
     <div class="mb-3">
       <label class="form-label">Image URL:</label>
-      <input class="form-control"
-             type="text"
-             name="Listing[image][url]"
-             value="<%= list.image.url %>">
+      <input class="form-control" type="url" name="Listing[image][url]" value="<%= list.image?.url || '' %> " required>
+      <div class="invalid-feedback">Please provide a valid image URL.</div>     
     </div>
 
     <div class="row">
       <div class="col-6 mb-3">
         <label class="form-label">Price:</label>
-        <input class="form-control"
-               type="number"
-               name="Listing[price]"
-               value="<%= list.price %>"
-               required>
+        <input class="form-control" type="number" min="0" name="Listing[price]" value="<%= list.price %>" required>
+        <% if (error && error.toLowerCase().includes('price')) { %>
+          <div class="text-danger small mt-1"><%= error %></div>
+        <% } %>
+        <div class="invalid-feedback">Please provide a valid price.</div>
       </div>
 
       <div class="col-6 mb-3">
         <label class="form-label">Location:</label>
-        <input class="form-control"
-               type="text"
-               name="Listing[location]"
-               value="<%= list.location %>"
-               required>
+        <input class="form-control" type="text" name="Listing[location]" value="<%= list.location %>" required>
+        <div class="invalid-feedback">Please provide a location.</div>
       </div>
     </div>
 
     <div class="mb-3">
       <label class="form-label">Country:</label>
-      <input class="form-control"
-             type="text"
-             name="Listing[country]"
-             value="<%= list.country %>"
-             required>
+      <input class="form-control" type="text" name="Listing[country]" value="<%= list.country %>" required>
+      <div class="invalid-feedback">Please provide a valid country.</div>
     </div>
 
-    <button type="submit" class="btn btn-dark">
-      Update Listing
-    </button>
-
+    <button type="submit" class="btn btn-dark">Update Listing</button>
+  
   </form>
 </div>
+<script src="/js/form-validation.js"></script>

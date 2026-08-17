@@ -5,13 +5,13 @@
 <h2>Show Details</h2>
 <button onclick="window.history.back()" class="btn btn-dark mb-3 mt-3">Back</button>
 <div class="card">
-  <img class="card-img-top" src="<%= list.image.url %>" alt="Listing image">
+  <img class="card-img-top" src="<%= list.image?.url || '/images/airbnb.jpg' %>" alt="Listing image">
 
   <div class="card-body">
     <h5 class="card-title"><b><%= list.title %></b></h5>
 
     <p class="card-text">
-      Price: ₹ <%= list.price.toLocaleString("en-IN") %>/night
+      Price: ₹ <%= (list.price ?? 0).toLocaleString("en-IN") %>/night
     </p>
 
     <p class="card-text"><%= list.description %></p>
