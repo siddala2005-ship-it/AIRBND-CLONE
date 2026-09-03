@@ -32,6 +32,12 @@ const listingSchema = new mongoose.Schema({
   // Location and country for easier searching and display
   location: String,
   country: String,
+  reviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
 });
 
 // Create and export the Listing model for use in routes and controllers

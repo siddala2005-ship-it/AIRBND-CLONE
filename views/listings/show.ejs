@@ -25,5 +25,21 @@
 </div>
 
 <a href="/listings/<%= list._id %>/edit" class=" mb-3 btn btn-dark mt-3">Edit</a>
-<a href="/listings/<%=list._id%>/delete" class=" mb-3 btn btn-dark mt-3">Delete</a>
+<a href="/listings/<%=list._id%>/delete" class=" mb-3 btn btn-dark mt-3">Delete</a> 
+<hr>
+<h3>Reviews</h3>
+<div className="col-8 offset-3 mt-5">
+  <form  action="/listings/<%= list._id %>/reviews" method="POST" novalidate class="needs-validation"> 
+<div>
+  <label for="rating">Rating:</label>
+  <input type="range" id="rating" name="review[rating]" min="1" max="5" class="form-range" step="1" value="3">
+</div>
+<div ><label for="comment" class="mt-2 mb-2">Comment:</label>
+  <textarea class="form-control" id="comment" name="review[comment]" rows="5" cols="30" placeholder="Enter your review here..." required></textarea>
+  
+  <div class="invalid-feedback">Please write a comment.</div>
+</div>
+<button type="submit" class="btn btn-dark mt-3 mb-3">Submit Review</button>  
+  </form>
+</div>
 </div>

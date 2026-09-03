@@ -5,6 +5,11 @@ const path = require("path");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const wrapAsync = require("./utils/wrapAsync");
+const Review = require("./models/reviews");
+const Joi = require("joi");
+const { listingSchema, reviewSchema } = require("./schema");
+
+
 
 const app = express();
 
@@ -210,16 +215,36 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
   res.redirect("/listings");
 }));
 
+//reviews
+app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => {
+  const listing = await Listing.findById(req.params.id);
+
+  if (!listing) {
+    return res.status(404).send("Listing not found.");
+  }
+
+  const reviewData = req.body?.review;
+  if (!reviewData) {
+    return res.status(400).send("Review data is required.");
+  }
+
+  const newReview = new Review(reviewData);
+  listing.reviews.push(newReview);
+  await newReview.save();
+  await listing.save();
+  res.redirect(`/listings/${listing._id}`);
+}));
+
 // Handle unknown routes
 app.use((req, res) => {
-  res.status(404).send("Page not found.");
-  res.render("error.ejs", { error: "Page not found." });  
+  res.status(404).render("error.ejs", { error: "Page not found." });
 });
 // Central error handler for runtime issues
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(err.statusCode || 500).send(err.message || "Something went wrong.");
-  res.render("error.ejs", { error: err.message || "Something went wrong." });   
+  res
+    .status(err.statusCode || 500)
+    .render("error.ejs", { error: err.message || "Something went wrong." });
 });
 
 app.listen(PORT, () => {
