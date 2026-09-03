@@ -141,3 +141,7 @@ This project helped me learn:
 
 B.Tech – Electronics and Communication Engineering  
 BV Raju Institute of Technology
+
+## Form Validation
+
+Forms use Bootstrap validation styling. The `novalidate` attribute disables inconsistent browser messages, while `public/js/script.js` checks each `.needs-validation` form with `checkValidity()` and displays the standard Bootstrap feedback.

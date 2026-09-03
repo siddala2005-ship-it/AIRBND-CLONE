@@ -29,7 +29,7 @@
 <hr>
 <h3>Reviews</h3>
 <div className="col-8 offset-3 mt-5">
-  <form  action="/listings/<%= list._id %>/reviews" method="POST" novalidate class="needs-validation"> 
+  <form  action="/listings/<%= list._id %>/reviews" method="POST" novalidate class="needs-validation"> <!--client side validation-->
 <div>
   <label for="rating">Rating:</label>
   <input type="range" id="rating" name="review[rating]" min="1" max="5" class="form-range" step="1" value="3">

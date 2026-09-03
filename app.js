@@ -215,7 +215,7 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
   res.redirect("/listings");
 }));
 
-//reviews
+//reviews //SERVER SIDE VALIDATION(VALIDATE REVIEW DATA USING JOI)
 app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => {
   const listing = await Listing.findById(req.params.id);
 
