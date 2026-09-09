@@ -48,7 +48,7 @@ body{
 .f-info-links a:hover {
     text-decoration: underline;
 }
-.card{
+.listing-card{
     border:none !important;
     margin-bottom: 2rem;
 }
@@ -82,6 +82,15 @@ padding:0;
 }
 .btn-dark:hover{
     background-color: #fe424d !important;
+    border:none !important;
+    opacity:0.8;
+}
+.delbtn{
+    background-color: black!important;
+    border:none !important;
+}
+.delbtn:hover{
+    background-color:black !important;
     border:none !important;
     opacity:0.8;
 }

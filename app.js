@@ -29,6 +29,16 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
+const validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
+
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
+
+  next();
+};
+
 // Convert an incoming price value into a valid number or a safe fallback
 function normalizePrice(value) {
   if (value === undefined || value === null || value === "") {
@@ -130,7 +140,7 @@ app.post("/listings", wrapAsync(async (req, res) => {
 // Show one listing in detail
 app.get("/listings/:id", async (req, res) => {
   const { id } = req.params;
-  const list = await Listing.findById(id);
+  const list = await Listing.findById(id).populate("reviews");
 
   if (!list) {
     return res.status(404).send("Listing not found.");
@@ -202,13 +212,15 @@ app.put("/listings/:id", wrapAsync(async (req, res) => {
   }
 }));
 
+//difference between GET and DELETE method for deleting a listing
+// GET method is used to retrieve data from the server, while DELETE method is used to remove data from the server. In this case, the GET method is used to render a confirmation page for deleting a listing, while the DELETE method is used to actually delete the listing from the database.
 // Delete a listing from the database
 app.get("/listings/:id/delete", wrapAsync(async (req, res) => {
   const { id } = req.params;
   await Listing.findByIdAndDelete(id);
   res.redirect("/listings");
 }));
-
+//delete listing using DELETE method 
 app.delete("/listings/:id", wrapAsync(async (req, res) => {
   const { id } = req.params;
   await Listing.findByIdAndDelete(id);
@@ -234,6 +246,28 @@ app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => 
   await listing.save();
   res.redirect(`/listings/${listing._id}`);
 }));
+
+
+// Delete a review from a listing
+app.delete("/listings/:listingId/reviews/:reviewId", wrapAsync(async (req, res) => {
+  const { listingId, reviewId } = req.params;
+  const listing = await Listing.findById(listingId);
+  if (!listing) {
+    return res.status(404).send("Listing not found.");
+  }
+  // Use find() because listing.reviews is a populated array, not a model
+  // findById() is a Mongoose model method and doesn't exist on arrays
+  const review = listing.reviews.find(r => r._id.toString() === reviewId);
+  if (!review) {
+    return res.status(404).send("Review not found.");
+  }
+  // Use pull() to remove the review from the array, then save the parent listing
+  // This is the correct way to remove items from Mongoose subdocument arrays
+  listing.reviews.pull(reviewId);
+  await listing.save();
+  res.redirect(`/listings/${listing._id}`);
+}));
+
 
 // Handle unknown routes
 app.use((req, res) => {
